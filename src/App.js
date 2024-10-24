@@ -48,7 +48,7 @@ const EventRegistrationForm = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    console.log("Event ID from URL: ", urlParams.get("eventId"));
+
     setFormData((prevData) => ({
       ...prevData,
       eventId:urlParams.get("eventId") || "",
@@ -60,7 +60,7 @@ const EventRegistrationForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitting form with eventId: ", formData.eventId);
+    
     const filteredFormData = {
       ...formData,
       dietaryRequirements:
@@ -79,7 +79,7 @@ const EventRegistrationForm = () => {
     const baseURL =
       "https://dev-sjghc.creatio.com/0/ServiceModel/UsrAnonymousEventRegistrationService.svc/CreateEvent";
     const fullURL = `${baseURL}?${queryParams}`;
-
+    
     window.location.href = fullURL;
 
     setShowSnackbar(true);
@@ -87,6 +87,7 @@ const EventRegistrationForm = () => {
 
   const handleInputChange = (event) => {
     const { name, type, value, checked } = event.target;
+    console.log("Input change - name:", name, "value:", value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
