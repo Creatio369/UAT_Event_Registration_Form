@@ -50,6 +50,7 @@ const EventRegistrationForm = () => {
     const urlParams = new URLSearchParams(window.location.search);
     setFormData((prevData) => ({
       ...prevData,
+      eventId:urlParams.get("eventId") || "",
       eventName: urlParams.get("eventName") || "",
       eventDate: urlParams.get("eventDate") || "",
       eventVenue: urlParams.get("eventVenue") || "",
