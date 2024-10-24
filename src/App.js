@@ -40,8 +40,8 @@ const EventRegistrationForm = () => {
     dietaryRequirements: "",
     otherDietaryRequirement: "",
     AHPRANumber: "",
-    RACGPNumber: "",
-    otherCPDNumber: "",
+    RACGP: "",
+    OtherCPD: "",
     termsAndConditionsAccepted: false,
   });
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -134,7 +134,7 @@ const EventRegistrationForm = () => {
           <Typography variant="h5" className="pt-6 pb-2">
             Event Details
           </Typography>
-          
+
           <TextField
             fullWidth
             margin="normal"
@@ -268,8 +268,8 @@ const EventRegistrationForm = () => {
             fullWidth
             margin="normal"
             label="RACGP #"
-            name="RACGPNumber"
-            value={formData.RACGPNumber}
+            name="RACGP"
+            value={formData.RACGP}
             required
             onChange={handleInputChange}
           />
@@ -278,8 +278,8 @@ const EventRegistrationForm = () => {
             fullWidth
             margin="normal"
             label="Other CPD #"
-            name="otherCPDNumber"
-            value={formData.otherCPDNumber}
+            name="OtherCPD"
+            value={formData.OtherCPD}
             required
             onChange={handleInputChange}
           />
