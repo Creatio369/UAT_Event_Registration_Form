@@ -134,16 +134,7 @@ const EventRegistrationForm = () => {
           <Typography variant="h5" className="pt-6 pb-2">
             Event Details
           </Typography>
-
-          <TextField
-             fullWidth
-             margin="normal"
-             label="Event ID"
-             name="eventId"
-             value={formData.eventId}  
-             disabled  
-          />
-
+          
           <TextField
             fullWidth
             margin="normal"
