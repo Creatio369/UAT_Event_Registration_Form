@@ -48,6 +48,7 @@ const EventRegistrationForm = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    console.log("Event ID from URL: ", urlParams.get("eventId"));
     setFormData((prevData) => ({
       ...prevData,
       eventId:urlParams.get("eventId") || "",
@@ -59,7 +60,7 @@ const EventRegistrationForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
+    console.log("Submitting form with eventId: ", formData.eventId);
     const filteredFormData = {
       ...formData,
       dietaryRequirements:
@@ -133,6 +134,15 @@ const EventRegistrationForm = () => {
           <Typography variant="h5" className="pt-6 pb-2">
             Event Details
           </Typography>
+
+          <TextField
+             fullWidth
+             margin="normal"
+             label="Event ID"
+             name="eventId"
+             value={formData.eventId}  
+             disabled  
+          />
 
           <TextField
             fullWidth
