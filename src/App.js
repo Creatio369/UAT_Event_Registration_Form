@@ -11,6 +11,7 @@ import {
   Snackbar,
   TextField,
   Typography,
+  Modal,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { MuiTelInput } from "mui-tel-input";
@@ -44,14 +45,16 @@ const EventRegistrationForm = () => {
     OtherCPD: "",
     termsAndConditionsAccepted: false,
   });
+
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
 
     setFormData((prevData) => ({
       ...prevData,
-      eventId:urlParams.get("eventId") || "",
+      eventId: urlParams.get("eventId") || "",
       eventName: urlParams.get("eventName") || "",
       eventDate: urlParams.get("eventDate") || "",
       eventVenue: urlParams.get("eventVenue") || "",
@@ -60,7 +63,7 @@ const EventRegistrationForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    
+
     const filteredFormData = {
       ...formData,
       dietaryRequirements:
@@ -81,13 +84,11 @@ const EventRegistrationForm = () => {
     const fullURL = `${baseURL}?${queryParams}`;
     
     window.location.href = fullURL;
-
     setShowSnackbar(true);
   };
 
   const handleInputChange = (event) => {
     const { name, type, value, checked } = event.target;
-    console.log("Input change - name:", name, "value:", value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
@@ -294,7 +295,27 @@ const EventRegistrationForm = () => {
                 onChange={handleInputChange}
               />
             }
-            label="I acknowledge the terms & conditions"
+            label={
+              <span>
+                I acknowledge the{" "}
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={() => setOpenModal(true)}
+                  sx={{
+                    color: 'blue',
+                    padding: 0,
+                    lineHeight: 0,
+                    '&:hover': {
+                      textDecoration: 'underline',
+                      backgroundColor: 'none'
+                    }
+                  }}
+                >
+                   terms & conditions
+                </Button>
+              </span>
+            }
             className="pt-2 pb-4"
           />
 
@@ -305,6 +326,98 @@ const EventRegistrationForm = () => {
           </Box>
         </form>
       </Container>
+
+      {/* Modal for Terms and Conditions */}
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        aria-labelledby="terms-and-conditions-title"
+        aria-describedby="terms-and-conditions-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "#f9f9f9",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <IconButton
+            aria-label="close"
+            onClick={() => setOpenModal(false)}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: "#f44336",
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+
+          <Typography
+            id="terms-and-conditions-title"
+            variant="h5"
+            component="h2"
+            sx={{ mb: 3, fontWeight: "bold", color: "#3f51b5" }}
+          >
+            Terms & Conditions
+          </Typography>
+
+          <Typography
+            id="terms-and-conditions-description"
+            sx={{ mt: 2, fontSize: "1rem", lineHeight: 1.6, color: "#424242" }}
+          >
+            <b style={{ color: "#3f51b5" }}>St John of God Health Care</b> is
+            committed to upholding the dignity of each person. Guided by the
+            value of respect, we will manage all personal information in
+            accordance with privacy legislation.
+            <br />
+            <br />
+            Further information about our privacy policy can be found here:{" "}
+            <a
+              href="https://sjog.org.au"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#ff4081" }}
+            >
+              Privacy Policy
+            </a>
+            .
+            <br />
+            <br />
+            <b style={{ color: "#3f51b5" }}>Photography at events</b>
+            <br />
+            Photographs taken during events will be used solely for the
+            promotion of GP education. If you do not wish to have your
+            photograph taken, please notify our staff during the event.
+            <br />
+            <br />
+            <b style={{ color: "#3f51b5" }}>Event registration and personal
+            information</b>
+            <br />
+            Your privacy is important to us. We collect personal information to
+            provide updates on upcoming GP education events. We will not share
+            your information with third parties without your consent.
+            <br />
+            <br />
+            <b>We do not use your personal information for direct marketing</b>,
+            but we may send emails related to event registration, such as:
+            <ol style={{ marginLeft: "20px", color: "#616161" }}>
+              <li>1. Event confirmations</li>
+              <li>2. Reminder notifications</li>
+            </ol>
+            <br />
+            If you prefer not to receive emails from us, you can opt out at any
+            time by selecting the <b>"unsubscribe"</b> option.
+          </Typography>
+        </Box>
+      </Modal>
     </Paper>
   );
 };
