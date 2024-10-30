@@ -51,7 +51,6 @@ const EventRegistrationForm = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-
     setFormData((prevData) => ({
       ...prevData,
       eventId: urlParams.get("eventId") || "",
@@ -63,11 +62,9 @@ const EventRegistrationForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
     const filteredFormData = {
       ...formData,
-      dietaryRequirements:
-        formData.otherDietaryRequirement || formData.dietaryRequirements,
+      dietaryRequirements: formData.otherDietaryRequirement || formData.dietaryRequirements,
     };
     delete filteredFormData.otherDietaryRequirement;
     delete filteredFormData.termsAndConditionsAccepted;
@@ -82,7 +79,6 @@ const EventRegistrationForm = () => {
     const baseURL =
       "https://dev-sjghc.creatio.com/0/ServiceModel/UsrAnonymousEventRegistrationService.svc/CreateEvent";
     const fullURL = `${baseURL}?${queryParams}`;
-    
     window.location.href = fullURL;
     setShowSnackbar(true);
   };
@@ -98,12 +94,8 @@ const EventRegistrationForm = () => {
   const handleDietaryRequirementsChange = (_, selectedOptions) => {
     setFormData((prevData) => ({
       ...prevData,
-      dietaryRequirements: selectedOptions
-        .map((option) => option.value)
-        .join(","),
-      otherDietaryRequirement: selectedOptions.some(
-        (option) => option.value === "Other (free text)"
-      )
+      dietaryRequirements: selectedOptions.map((option) => option.value).join(","),
+      otherDietaryRequirement: selectedOptions.some((option) => option.value === "Other (free text)")
         ? prevData.otherDietaryRequirement
         : "",
     }));
@@ -137,98 +129,20 @@ const EventRegistrationForm = () => {
             Event Details
           </Typography>
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Event Name"
-            name="eventName"
-            value={formData.eventName}
-            disabled
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Event Date"
-            name="eventDate"
-            value={formData.eventDate}
-            disabled
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Event Venue"
-            name="eventVenue"
-            value={formData.eventVenue}
-            disabled
-          />
+          <TextField fullWidth margin="normal" label="Event Name" name="eventName" value={formData.eventName} disabled />
+          <TextField fullWidth margin="normal" label="Event Date" name="eventDate" value={formData.eventDate} disabled />
+          <TextField fullWidth margin="normal" label="Event Venue" name="eventVenue" value={formData.eventVenue} disabled />
 
           <Typography variant="h5" className="pt-9 pb-2">
             Participant Details
           </Typography>
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Title"
-            name="title"
-            value={formData.title}
-            required
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="First Name"
-            name="firstName"
-            value={formData.firstName}
-            required
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Last Name"
-            name="lastName"
-            value={formData.lastName}
-            required
-            onChange={handleInputChange}
-          />
-
-          <MuiTelInput
-            fullWidth
-            margin="normal"
-            label="Mobile"
-            name="mobile"
-            value={formData.mobile}
-            defaultCountry={"AU"}
-            required
-            onChange={(value) => setFormData({ ...formData, mobile: value })}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            required
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Practice Name"
-            name="practiceName"
-            value={formData.practiceName}
-            required
-            onChange={handleInputChange}
-          />
+          <TextField fullWidth margin="normal" label="Title" name="title" value={formData.title} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="First Name" name="firstName" value={formData.firstName} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="Last Name" name="lastName" value={formData.lastName} required onChange={handleInputChange} />
+          <MuiTelInput fullWidth margin="normal" label="Mobile" name="mobile" value={formData.mobile} defaultCountry="AU" required onChange={(value) => setFormData({ ...formData, mobile: value })} />
+          <TextField fullWidth margin="normal" label="Email" name="email" type="email" value={formData.email} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="Practice Name" name="practiceName" value={formData.practiceName} required onChange={handleInputChange} />
 
           <Autocomplete
             multiple
@@ -236,55 +150,16 @@ const EventRegistrationForm = () => {
             disableCloseOnSelect
             onChange={handleDietaryRequirementsChange}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                margin="normal"
-                label="Dietary Requirements"
-                required={!formData.dietaryRequirements}
-              />
+              <TextField {...params} variant="outlined" margin="normal" label="Dietary Requirements" required={!formData.dietaryRequirements} />
             )}
           />
           {formData.dietaryRequirements.includes("Other (free text)") && (
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Please specify"
-              name="otherDietaryRequirement"
-              value={formData.otherDietaryRequirement}
-              onChange={handleInputChange}
-            />
+            <TextField fullWidth margin="normal" label="Please specify" name="otherDietaryRequirement" value={formData.otherDietaryRequirement} onChange={handleInputChange} />
           )}
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="AHPRA Number"
-            name="AHPRANumber"
-            value={formData.AHPRANumber}
-            required
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="RACGP #"
-            name="RACGP"
-            value={formData.RACGP}
-            required
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Other CPD #"
-            name="OtherCPD"
-            value={formData.OtherCPD}
-            required
-            onChange={handleInputChange}
-          />
+          <TextField fullWidth margin="normal" label="AHPRA Number" name="AHPRANumber" value={formData.AHPRANumber} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="RACGP #" name="RACGP" value={formData.RACGP} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="Other CPD #" name="OtherCPD" value={formData.OtherCPD} required onChange={handleInputChange} />
 
           <FormControlLabel
             control={
@@ -312,7 +187,7 @@ const EventRegistrationForm = () => {
                     }
                   }}
                 >
-                   terms & conditions
+                  terms & conditions
                 </Button>
               </span>
             }
@@ -327,7 +202,6 @@ const EventRegistrationForm = () => {
         </form>
       </Container>
 
-      {/* Modal for Terms and Conditions */}
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -341,80 +215,49 @@ const EventRegistrationForm = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: 500,
+            height: "80vh",
             bgcolor: "#f9f9f9",
             borderRadius: "8px",
             boxShadow: 24,
             p: 4,
+            overflowY: "auto",
           }}
         >
-          <IconButton
-            aria-label="close"
-            onClick={() => setOpenModal(false)}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: "#f44336",
-            }}
-          >
+          <IconButton aria-label="close" onClick={() => setOpenModal(false)} sx={{ position: "absolute", right: 8, top: 8, color: "#f44336" }}>
             <CloseIcon />
           </IconButton>
-
-          <Typography
-            id="terms-and-conditions-title"
-            variant="h5"
-            component="h2"
-            sx={{ mb: 3, fontWeight: "bold", color: "#3f51b5" }}
-          >
+          <Typography id="terms-and-conditions-title" variant="h5" component="h2" sx={{ mb: 3, fontWeight: "bold", color: "#3f51b5" }}>
             Terms & Conditions
           </Typography>
-
-          <Typography
-            id="terms-and-conditions-description"
-            sx={{ mt: 2, fontSize: "1rem", lineHeight: 1.6, color: "#424242" }}
-          >
-            <b style={{ color: "#3f51b5" }}>St John of God Health Care</b> is
-            committed to upholding the dignity of each person. Guided by the
-            value of respect, we will manage all personal information in
-            accordance with privacy legislation.
+          <Typography id="terms-and-conditions-description" sx={{ mt: 2, fontSize: "1rem", lineHeight: 1.6, color: "#424242" }}>
+            <b style={{ color: "#3f51b5" }}>St John of God Health Care</b> is committed to upholding the dignity of each person.
+            Guided by the value of respect, we will manage all personal information in accordance with privacy legislation.
             <br />
             <br />
             Further information about our privacy policy can be found here:{" "}
-            <a
-              href="https://sjog.org.au"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#ff4081" }}
-            >
+            <a href="https://sjog.org.au" target="_blank" rel="noopener noreferrer" style={{ color: "#ff4081" }}>
               Privacy Policy
-            </a>
-            .
+            </a>.
             <br />
             <br />
             <b style={{ color: "#3f51b5" }}>Photography at events</b>
             <br />
-            Photographs taken during events will be used solely for the
-            promotion of GP education. If you do not wish to have your
-            photograph taken, please notify our staff during the event.
+            Photographs taken during events will be used solely for the promotion of GP education. If you do not wish to have your photograph taken, please notify our staff during the event.
             <br />
             <br />
-            <b style={{ color: "#3f51b5" }}>Event registration and personal
-            information</b>
+            <b style={{ color: "#3f51b5" }}>Event registration and personal information</b>
             <br />
-            Your privacy is important to us. We collect personal information to
-            provide updates on upcoming GP education events. We will not share
-            your information with third parties without your consent.
+            Your privacy is important to us. We collect personal information to provide updates on upcoming GP education events.
+            We will not share your information with third parties without your consent.
             <br />
             <br />
-            <b>We do not use your personal information for direct marketing</b>,
-            but we may send emails related to event registration, such as:
+            <b>We do not use your personal information for direct marketing</b>, but we may send emails related to event registration, such as:
             <ol style={{ marginLeft: "20px", color: "#616161" }}>
               <li>1. Event confirmations</li>
               <li>2. Reminder notifications</li>
             </ol>
             <br />
-            If you prefer not to receive emails from us, you can opt out at any
-            time by selecting the <b>"unsubscribe"</b> option.
+            If you prefer not to receive emails from us, you can opt out at any time by selecting the <b>"unsubscribe"</b> option.
           </Typography>
         </Box>
       </Modal>
