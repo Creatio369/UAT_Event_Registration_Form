@@ -215,7 +215,7 @@ const EventRegistrationForm = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: 500,
-            height: "80vh",
+            maxHeight: "90vh",
             bgcolor: "#f9f9f9",
             borderRadius: "8px",
             boxShadow: 24,
@@ -235,8 +235,9 @@ const EventRegistrationForm = () => {
             <br />
             <br />
             Further information about our privacy policy can be found here:{" "}
-            <a href="https://sjog.org.au" target="_blank" rel="noopener noreferrer" style={{ color: "#ff4081" }}>
+            <a href="https://sjog.org.au" target="_blank" rel="noopener noreferrer" style={{ color: "#ff4081" }} className="hover:underline">
               Privacy Policy
+
             </a>.
             <br />
             <br />
