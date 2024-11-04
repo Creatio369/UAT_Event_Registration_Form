@@ -57,6 +57,7 @@ const EventRegistrationForm = () => {
       eventName: urlParams.get("eventName") || "",
       eventDate: urlParams.get("eventDate") || "",
       eventVenue: urlParams.get("eventVenue") || "",
+      AHPRANumber: "MED000"
     }));
   }, []);
 
@@ -157,7 +158,7 @@ const EventRegistrationForm = () => {
             <TextField fullWidth margin="normal" label="Please specify" name="otherDietaryRequirement" value={formData.otherDietaryRequirement} onChange={handleInputChange} />
           )}
 
-          <TextField fullWidth margin="normal" label="AHPRA Number" name="AHPRANumber" value={formData.AHPRANumber} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="AHPRA Number" name="AHPRANumber" value={formData.AHPRANumber} required={formData.AHPRANumber === "MED000"} onChange={handleInputChange} />
           <TextField fullWidth margin="normal" label="RACGP #" name="RACGP" value={formData.RACGP} required onChange={handleInputChange} />
           <TextField fullWidth margin="normal" label="Other CPD #" name="OtherCPD" value={formData.OtherCPD} required onChange={handleInputChange} />
 
