@@ -43,27 +43,39 @@ const EventRegistrationForm = () => {
     AHPRANumber: "",
     RACGP: "",
     OtherCPD: "",
+    remainingCapacity: 0,
     termsAndConditionsAccepted: false,
   });
 
+  const [showCapacityNotification, setShowCapacityNotification] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+
+    const eventCapacity = parseInt(urlParams.get("remainingCapacity") || "0", 10);
+
     setFormData((prevData) => ({
       ...prevData,
       eventId: urlParams.get("eventId") || "",
       eventName: urlParams.get("eventName") || "",
       eventDate: urlParams.get("eventDate") || "",
       eventVenue: urlParams.get("eventVenue") || "",
+      remainingCapacity: eventCapacity,
       AHPRANumber: "MED000"
     }));
+
+    if (eventCapacity === 0) {
+      setShowCapacityNotification(true);
+    }
+
   }, []);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-  
+
     const filteredFormData = {
       ...formData,
       dietaryRequirements: formData.dietaryRequirements
@@ -72,18 +84,18 @@ const EventRegistrationForm = () => {
         .concat(formData.otherDietaryRequirement || [])
         .join(","),
     };
-  
-    // Remove unnecessary fields
+
+
     delete filteredFormData.otherDietaryRequirement;
     delete filteredFormData.termsAndConditionsAccepted;
-  
-    // Remove empty fields
+
+
     Object.keys(filteredFormData).forEach((key) => {
       if (filteredFormData[key] === "") {
         delete filteredFormData[key];
       }
     });
-  
+
     const queryParams = new URLSearchParams(filteredFormData).toString();
     const baseURL =
       "https://dev-sjghc.creatio.com/0/ServiceModel/UsrAnonymousEventRegistrationService.svc/CreateEvent";
@@ -91,7 +103,7 @@ const EventRegistrationForm = () => {
     window.location.href = fullURL;
     setShowSnackbar(true);
   };
-  
+
   const handleInputChange = (event) => {
     const { name, type, value, checked } = event.target;
     setFormData((prevData) => ({
@@ -125,6 +137,48 @@ const EventRegistrationForm = () => {
           >
             <CloseIcon fontSize="small" />
           </IconButton>
+        }
+      />
+      <Snackbar
+        open={showCapacityNotification}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        message={
+          <span style={{ color: "#ffffff", fontWeight: "bold", textAlign: "center" }}>
+            Unfortunately, this event has reached its maximum capacity. However, you
+            may still register if you would like to be placed on the waitlist. We will
+            notify you as soon as space becomes available.
+          </span>
+        }
+        sx={{
+          "& .MuiSnackbarContent-root": {
+            backgroundColor: "#1e88e5",
+            color: "#ffffff",
+            fontSize: "16px",
+            fontWeight: "500",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            padding: "16px",
+            width: "fit-content",
+            maxWidth: "80%",
+          },
+        }}
+        action={
+          <Button
+            onClick={() => setShowCapacityNotification(false)}
+            sx={{
+              color: "#ffffff",
+              textTransform: "none",
+              fontWeight: "bold",
+              fontSize: "14px",
+              padding: "6px 16px",
+              backgroundColor: "#0d47a1",
+              "&:hover": {
+                backgroundColor: "#1565c0",
+              },
+            }}
+          >
+            OK
+          </Button>
         }
       />
 
