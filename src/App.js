@@ -63,19 +63,27 @@ const EventRegistrationForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+  
     const filteredFormData = {
       ...formData,
-      dietaryRequirements: formData.otherDietaryRequirement || formData.dietaryRequirements,
+      dietaryRequirements: formData.dietaryRequirements
+        .split(",")
+        .filter((item) => item !== "Other (free text)")
+        .concat(formData.otherDietaryRequirement || [])
+        .join(","),
     };
+  
+    // Remove unnecessary fields
     delete filteredFormData.otherDietaryRequirement;
     delete filteredFormData.termsAndConditionsAccepted;
-
+  
+    // Remove empty fields
     Object.keys(filteredFormData).forEach((key) => {
       if (filteredFormData[key] === "") {
         delete filteredFormData[key];
       }
     });
-
+  
     const queryParams = new URLSearchParams(filteredFormData).toString();
     const baseURL =
       "https://dev-sjghc.creatio.com/0/ServiceModel/UsrAnonymousEventRegistrationService.svc/CreateEvent";
@@ -83,7 +91,7 @@ const EventRegistrationForm = () => {
     window.location.href = fullURL;
     setShowSnackbar(true);
   };
-
+  
   const handleInputChange = (event) => {
     const { name, type, value, checked } = event.target;
     setFormData((prevData) => ({

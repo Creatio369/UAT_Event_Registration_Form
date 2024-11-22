@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/UAT_Event_Registration_Form/static/css/main.890d58a8.css",
-    "main.js": "/UAT_Event_Registration_Form/static/js/main.8f9a26cb.js",
-    "static/js/453.ba95e100.chunk.js": "/UAT_Event_Registration_Form/static/js/453.ba95e100.chunk.js",
-    "index.html": "/UAT_Event_Registration_Form/index.html",
-    "main.890d58a8.css.map": "/UAT_Event_Registration_Form/static/css/main.890d58a8.css.map",
-    "main.8f9a26cb.js.map": "/UAT_Event_Registration_Form/static/js/main.8f9a26cb.js.map",
-    "453.ba95e100.chunk.js.map": "/UAT_Event_Registration_Form/static/js/453.ba95e100.chunk.js.map"
+    "main.css": "/Event_Registration/static/css/main.890d58a8.css",
+    "main.js": "/Event_Registration/static/js/main.9c621b83.js",
+    "static/js/453.ba95e100.chunk.js": "/Event_Registration/static/js/453.ba95e100.chunk.js",
+    "index.html": "/Event_Registration/index.html",
+    "main.890d58a8.css.map": "/Event_Registration/static/css/main.890d58a8.css.map",
+    "main.9c621b83.js.map": "/Event_Registration/static/js/main.9c621b83.js.map",
+    "453.ba95e100.chunk.js.map": "/Event_Registration/static/js/453.ba95e100.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.890d58a8.css",
-    "static/js/main.8f9a26cb.js"
+    "static/js/main.9c621b83.js"
   ]
 }
