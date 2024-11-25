@@ -38,7 +38,7 @@ const EventRegistrationForm = () => {
     mobile: "",
     email: "",
     practiceName: "",
-    dietaryRequirements: "",
+    dietaryRequirementsNames: "",
     otherDietaryRequirement: "",
     AHPRANumber: "",
     RACGP: "",
@@ -55,7 +55,9 @@ const EventRegistrationForm = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
 
-    const eventCapacity = parseInt(urlParams.get("remainingCapacity") || "0", 10);
+    const remainingCapacity = urlParams.has("remainingCapacity")
+    ? parseInt(urlParams.get("remainingCapacity"), 10)
+    : null;
 
     setFormData((prevData) => ({
       ...prevData,
@@ -63,13 +65,16 @@ const EventRegistrationForm = () => {
       eventName: urlParams.get("eventName") || "",
       eventDate: urlParams.get("eventDate") || "",
       eventVenue: urlParams.get("eventVenue") || "",
-      remainingCapacity: eventCapacity,
+      remainingCapacity: remainingCapacity !== null ? remainingCapacity : 0,
       AHPRANumber: "MED000"
     }));
 
-    if (eventCapacity === 0) {
+    if (remainingCapacity === 0) {
       setShowCapacityNotification(true);
+    } else {
+      setShowCapacityNotification(false);
     }
+
 
   }, []);
 
@@ -78,16 +83,20 @@ const EventRegistrationForm = () => {
 
     const filteredFormData = {
       ...formData,
-      dietaryRequirements: formData.dietaryRequirements
+      dietaryRequirementsNames: formData.dietaryRequirementsNames
         .split(",")
         .filter((item) => item !== "Other (free text)")
         .concat(formData.otherDietaryRequirement || [])
         .join(","),
     };
 
+    if (!filteredFormData.OtherCPD) {
+      delete filteredFormData.OtherCPD;
+    }
 
     delete filteredFormData.otherDietaryRequirement;
     delete filteredFormData.termsAndConditionsAccepted;
+
 
 
     Object.keys(filteredFormData).forEach((key) => {
@@ -115,7 +124,7 @@ const EventRegistrationForm = () => {
   const handleDietaryRequirementsChange = (_, selectedOptions) => {
     setFormData((prevData) => ({
       ...prevData,
-      dietaryRequirements: selectedOptions.map((option) => option.value).join(","),
+      dietaryRequirementsNames: selectedOptions.map((option) => option.value).join(","),
       otherDietaryRequirement: selectedOptions.some((option) => option.value === "Other (free text)")
         ? prevData.otherDietaryRequirement
         : "",
@@ -213,16 +222,16 @@ const EventRegistrationForm = () => {
             disableCloseOnSelect
             onChange={handleDietaryRequirementsChange}
             renderInput={(params) => (
-              <TextField {...params} variant="outlined" margin="normal" label="Dietary Requirements" required={!formData.dietaryRequirements} />
+              <TextField {...params} variant="outlined" margin="normal" label="Dietary Requirements" required={!formData.dietaryRequirementsNames} />
             )}
           />
-          {formData.dietaryRequirements.includes("Other (free text)") && (
+          {formData.dietaryRequirementsNames.includes("Other (free text)") && (
             <TextField fullWidth margin="normal" label="Please specify" name="otherDietaryRequirement" value={formData.otherDietaryRequirement} onChange={handleInputChange} />
           )}
 
           <TextField fullWidth margin="normal" label="AHPRA Number" name="AHPRANumber" value={formData.AHPRANumber} required={formData.AHPRANumber === "MED000"} onChange={handleInputChange} />
           <TextField fullWidth margin="normal" label="RACGP #" name="RACGP" value={formData.RACGP} required onChange={handleInputChange} />
-          <TextField fullWidth margin="normal" label="Other CPD #" name="OtherCPD" value={formData.OtherCPD} required onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="Other CPD #" name="OtherCPD" value={formData.OtherCPD}  onChange={handleInputChange} />
 
           <FormControlLabel
             control={
