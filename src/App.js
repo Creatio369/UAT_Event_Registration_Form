@@ -38,7 +38,7 @@ const EventRegistrationForm = () => {
     mobile: "",
     email: "",
     practiceName: "",
-    dietaryRequirementsNames: "",
+    dietaryRequirements: "",
     otherDietaryRequirement: "",
     AHPRANumber: "",
     RACGP: "",
@@ -83,7 +83,7 @@ const EventRegistrationForm = () => {
 
     const filteredFormData = {
       ...formData,
-      dietaryRequirementsNames: formData.dietaryRequirementsNames
+      dietaryRequirements: formData.dietaryRequirements
         .split(",")
         .filter((item) => item !== "Other (free text)")
         .concat(formData.otherDietaryRequirement || [])
@@ -124,7 +124,7 @@ const EventRegistrationForm = () => {
   const handleDietaryRequirementsChange = (_, selectedOptions) => {
     setFormData((prevData) => ({
       ...prevData,
-      dietaryRequirementsNames: selectedOptions.map((option) => option.value).join(","),
+      dietaryRequirements: selectedOptions.map((option) => option.value).join(","),
       otherDietaryRequirement: selectedOptions.some((option) => option.value === "Other (free text)")
         ? prevData.otherDietaryRequirement
         : "",
@@ -222,10 +222,10 @@ const EventRegistrationForm = () => {
             disableCloseOnSelect
             onChange={handleDietaryRequirementsChange}
             renderInput={(params) => (
-              <TextField {...params} variant="outlined" margin="normal" label="Dietary Requirements" required={!formData.dietaryRequirementsNames} />
+              <TextField {...params} variant="outlined" margin="normal" label="Dietary Requirements" required={!formData.dietaryRequirements} />
             )}
           />
-          {formData.dietaryRequirementsNames.includes("Other (free text)") && (
+          {formData.dietaryRequirements.includes("Other (free text)") && (
             <TextField fullWidth margin="normal" label="Please specify" name="otherDietaryRequirement" value={formData.otherDietaryRequirement} onChange={handleInputChange} />
           )}
 
