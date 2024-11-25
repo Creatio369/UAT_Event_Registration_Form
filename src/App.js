@@ -39,6 +39,7 @@ const EventRegistrationForm = () => {
     email: "",
     practiceName: "",
     dietaryRequirements: "",
+    dietaryRequirementsNames: "",
     otherDietaryRequirement: "",
     AHPRANumber: "",
     RACGP: "",
@@ -56,8 +57,8 @@ const EventRegistrationForm = () => {
     const urlParams = new URLSearchParams(window.location.search);
 
     const remainingCapacity = urlParams.has("remainingCapacity")
-    ? parseInt(urlParams.get("remainingCapacity"), 10)
-    : null;
+      ? parseInt(urlParams.get("remainingCapacity"), 10)
+      : null;
 
     setFormData((prevData) => ({
       ...prevData,
@@ -84,6 +85,11 @@ const EventRegistrationForm = () => {
     const filteredFormData = {
       ...formData,
       dietaryRequirements: formData.dietaryRequirements
+        .split(",")
+        .filter((item) => item !== "Other (free text)")
+        .concat(formData.otherDietaryRequirement || [])
+        .join(","),
+      dietaryRequirementsNames: formData.dietaryRequirementsNames
         .split(",")
         .filter((item) => item !== "Other (free text)")
         .concat(formData.otherDietaryRequirement || [])
@@ -125,6 +131,7 @@ const EventRegistrationForm = () => {
     setFormData((prevData) => ({
       ...prevData,
       dietaryRequirements: selectedOptions.map((option) => option.value).join(","),
+      dietaryRequirementsNames: selectedOptions.map((option) => option.label).join(","),
       otherDietaryRequirement: selectedOptions.some((option) => option.value === "Other (free text)")
         ? prevData.otherDietaryRequirement
         : "",
@@ -231,7 +238,7 @@ const EventRegistrationForm = () => {
 
           <TextField fullWidth margin="normal" label="AHPRA Number" name="AHPRANumber" value={formData.AHPRANumber} required={formData.AHPRANumber === "MED000"} onChange={handleInputChange} />
           <TextField fullWidth margin="normal" label="RACGP #" name="RACGP" value={formData.RACGP} required onChange={handleInputChange} />
-          <TextField fullWidth margin="normal" label="Other CPD #" name="OtherCPD" value={formData.OtherCPD}  onChange={handleInputChange} />
+          <TextField fullWidth margin="normal" label="Other CPD #" name="OtherCPD" value={formData.OtherCPD} onChange={handleInputChange} />
 
           <FormControlLabel
             control={
