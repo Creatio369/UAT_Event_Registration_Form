@@ -113,7 +113,7 @@ const EventRegistrationForm = () => {
 
     const queryParams = new URLSearchParams(filteredFormData).toString();
     const baseURL =
-      "https://pre-sjghc.creatio.com/0/ServiceModel/UsrAnonymousEventRegistrationService.svc/CreateEvent";
+      "https://dev-sjghc.creatio.com/0/ServiceModel/UsrAnonymousEventRegistrationService.svc/CreateEvent";
     const fullURL = `${baseURL}?${queryParams}`;
     window.location.href = fullURL;
     setShowSnackbar(true);
