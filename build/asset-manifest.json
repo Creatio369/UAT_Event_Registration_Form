@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/UAT_Event_Registration_Form/static/css/main.05375fe4.css",
-    "main.js": "/UAT_Event_Registration_Form/static/js/main.21ddc72b.js",
+    "main.js": "/UAT_Event_Registration_Form/static/js/main.f0bc39b4.js",
     "static/js/453.ba95e100.chunk.js": "/UAT_Event_Registration_Form/static/js/453.ba95e100.chunk.js",
     "index.html": "/UAT_Event_Registration_Form/index.html",
     "main.05375fe4.css.map": "/UAT_Event_Registration_Form/static/css/main.05375fe4.css.map",
-    "main.21ddc72b.js.map": "/UAT_Event_Registration_Form/static/js/main.21ddc72b.js.map",
+    "main.f0bc39b4.js.map": "/UAT_Event_Registration_Form/static/js/main.f0bc39b4.js.map",
     "453.ba95e100.chunk.js.map": "/UAT_Event_Registration_Form/static/js/453.ba95e100.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.05375fe4.css",
-    "static/js/main.21ddc72b.js"
+    "static/js/main.f0bc39b4.js"
   ]
 }

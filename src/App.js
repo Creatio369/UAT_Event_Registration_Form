@@ -93,7 +93,7 @@ const EventRegistrationForm = () => {
         .split(",")
         .filter((item) => item !== "Other (free text)")
         .concat(formData.otherDietaryRequirement || [])
-        .join("  ,"),
+        .join("  , "),
     };
 
     if (!filteredFormData.OtherCPD) {
